@@ -68,4 +68,15 @@ export class Fair {
         error: (e) => this.error.set(e.error?.error ?? 'Vérification impossible'),
       });
   }
+  deck = signal<{ hashMatches: boolean; deck: string[] } | null>(null);
+
+verifyShuffle() {
+  this.error.set('');
+  this.api
+    .verifyShuffle({ serverSeed: this.vServer, serverSeedHash: this.vHash, clientSeed: this.vClient, nonce: this.vNonce })
+    .subscribe({
+      next: (d) => this.deck.set(d),
+      error: (e) => this.error.set(e.error?.error ?? 'Vérification impossible'),
+    });
+}
 }

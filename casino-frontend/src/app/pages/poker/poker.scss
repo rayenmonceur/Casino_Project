@@ -1,0 +1,16 @@
+.back { color: var(--muted); font-size: 14px; }
+.title { font-family: 'Cinzel', serif; color: var(--gold); margin: 8px 0 20px; }
+.table { max-width: 560px; margin: 0 auto; text-align: center; .field { text-align: left; } }
+.pcard { cursor: pointer; font-family: inherit; }
+.pcard:disabled { cursor: default; }
+.wait { color: var(--muted); }
+.outcome { margin: 16px 0; }
+.winmsg { color: var(--turquoise); font-weight: 700; font-size: 20px; margin: 0; }
+.losemsg { color: #ff8fa0; margin: 0; }
+.row { display: flex; gap: 8px; margin-bottom: 16px; justify-content: center; }
+.pill {
+  background: none; border: 1px solid var(--line); color: var(--text);
+  padding: 5px 14px; border-radius: 999px; cursor: pointer;
+  &:hover { border-color: var(--gold); }
+}
+.pay { width: 100%; margin-top: 22px; color: var(--muted); font-size: 14px; td { padding: 4px 8px; text-align: left; } td:last-child { text-align: right; } tr.hit { color: var(--turquoise); font-weight: 700; } }

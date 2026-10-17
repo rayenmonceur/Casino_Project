@@ -1,0 +1,60 @@
+<main class="page">
+  <a routerLink="/lobby" class="back">← Lobby</a>
+  <h2 class="title">Blackjack</h2>
+
+  <section class="card table">
+    @if (state(); as s) {
+      <p class="who">
+        Croupier @if (s.dealerTotal !== null) { <b>({{ s.dealerTotal }})</b> }
+      </p>
+      <div class="cards">
+        @for (c of s.dealer; track $index) {
+          <span class="pcard" [class.red]="isRed(c)" [class.back]="c === '??'">{{ c === '??' ? '' : c }}</span>
+        }
+      </div>
+
+      <p class="who">Toi <b>({{ s.playerTotal }})</b></p>
+      <div class="cards">
+        @for (c of s.player; track $index) {
+          <span class="pcard" [class.red]="isRed(c)">{{ c }}</span>
+        }
+      </div>
+
+      @if (s.active) {
+        <div class="actions">
+          <button class="btn" [disabled]="busy()" (click)="act('hit')">Carte</button>
+          <button class="btn" [disabled]="busy()" (click)="act('stand')">Rester</button>
+          <button class="btn" [disabled]="busy() || !s.canDouble" (click)="act('double')">
+            Doubler ({{ s.bet | number: '1.0-0' }})
+          </button>
+        </div>
+      } @else {
+        <div class="outcome">
+          @switch (s.result) {
+            @case ('BLACKJACK') { <p class="winmsg">Blackjack ! +{{ s.payout | number: '1.0-2' }} jetons</p> }
+            @case ('WIN') { <p class="winmsg">Gagné ! +{{ s.payout | number: '1.0-2' }} jetons</p> }
+            @case ('PUSH') { <p class="wait">Égalité : mise rendue</p> }
+            @default { <p class="losemsg">Perdu, -{{ s.bet | number: '1.0-0' }} jetons</p> }
+          }
+          <p class="proof">Preuve : nonce {{ s.nonce }}, hash {{ s.serverSeedHash.slice(0, 12) }}…</p>
+        </div>
+      }
+    }
+
+    @if (!state() || !state()!.active) {
+      <label class="field">
+        <span>Mise (1 à 500 jetons)</span>
+        <input type="number" min="1" max="500" [(ngModel)]="amount" />
+      </label>
+      <div class="row">
+        @for (c of chips; track c) { <button class="pill" (click)="amount = c">{{ c }}</button> }
+      </div>
+      <button class="btn" [disabled]="busy()" (click)="start()">
+        {{ state() ? 'Nouvelle partie' : 'Distribuer' }}
+      </button>
+    }
+
+    @if (error()) { <p class="error">{{ error() }}</p> }
+    <p class="hint">Blackjack x2.5, victoire x2. Le croupier s'arrête à 17.</p>
+  </section>
+</main>

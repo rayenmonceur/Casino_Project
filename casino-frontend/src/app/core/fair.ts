@@ -16,5 +16,9 @@ export class FairClient {
   rotate() { return this.http.post<Reveal>(`${this.api}/rotate`, {}); }
   verify(body: { serverSeed: string; serverSeedHash: string; clientSeed: string; nonce: number; bounds: number[] }) {
     return this.http.post<Verified>(`${this.api}/verify`, body);
+
   }
+  verifyShuffle(body: { serverSeed: string; serverSeedHash: string; clientSeed: string; nonce: number }) {
+  return this.http.post<{ hashMatches: boolean; deck: string[] }>(`${this.api}/verify-shuffle`, body);
+}
 }

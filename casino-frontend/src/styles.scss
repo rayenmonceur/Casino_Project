@@ -105,3 +105,20 @@ a:hover { text-decoration: underline; }
 
 .page { max-width: 960px; margin: 0 auto; padding: 32px 20px; }
 .proof { color: var(--muted); font-size: 12px; margin: 6px 0 0; }
+.cards { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; min-height: 100px; padding-top: 10px; }
+
+.pcard {
+  width: 66px; height: 94px;
+  display: grid; place-items: center;
+  background: #f6f3ea; color: #12172e;
+  border: 2px solid transparent; border-radius: 10px;
+  font-weight: 700; font-size: 22px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s;
+  &.red { color: #c0314a; }
+  &.back {
+    background: repeating-linear-gradient(45deg, #1b2a66 0 6px, #26305f 6px 12px);
+    border-color: var(--gold-2);
+  }
+  &.held { border-color: var(--turquoise); transform: translateY(-10px); }
+}

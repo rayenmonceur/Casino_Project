@@ -1,0 +1,54 @@
+<main class="page">
+  <a routerLink="/lobby" class="back">← Lobby</a>
+  <h2 class="title">Video Poker</h2>
+
+  <section class="card table">
+    @if (state(); as s) {
+      <div class="cards">
+        @for (c of s.hand; track $index) {
+          <button class="pcard" [class.red]="isRed(c)" [class.held]="s.active && holds()[$index]"
+                  [disabled]="!s.active" (click)="toggle($index)">
+            {{ c }}
+          </button>
+        }
+      </div>
+
+      @if (s.active) {
+        <p class="wait">Clique sur les cartes à garder, puis change les autres.</p>
+        <button class="btn" [disabled]="busy()" (click)="draw()">Changer les cartes</button>
+      } @else {
+        <div class="outcome">
+          @if (s.payout > 0) {
+            <p class="winmsg">{{ resultLabel(s.result) }} ! +{{ s.payout | number: '1.0-2' }} jetons</p>
+          } @else {
+            <p class="losemsg">Rien, -{{ s.bet | number: '1.0-0' }} jetons</p>
+          }
+          <p class="proof">Preuve : nonce {{ s.nonce }}, hash {{ s.serverSeedHash.slice(0, 12) }}…</p>
+        </div>
+      }
+    }
+
+    @if (!state() || !state()!.active) {
+      <label class="field">
+        <span>Mise (1 à 500 jetons)</span>
+        <input type="number" min="1" max="500" [(ngModel)]="amount" />
+      </label>
+      <div class="row">
+        @for (c of chips; track c) { <button class="pill" (click)="amount = c">{{ c }}</button> }
+      </div>
+      <button class="btn" [disabled]="busy()" (click)="deal()">
+        {{ state() ? 'Nouvelle main' : 'Distribuer' }}
+      </button>
+    }
+
+    @if (error()) { <p class="error">{{ error() }}</p> }
+
+    <table class="pay">
+      @for (p of paytable; track p.id) {
+        <tr [class.hit]="state() && !state()!.active && state()!.result === p.id">
+          <td>{{ p.label }}</td><td>x{{ p.x }}</td>
+        </tr>
+      }
+    </table>
+  </section>
+</main>

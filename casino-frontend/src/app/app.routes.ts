@@ -33,6 +33,16 @@ export const routes: Routes = [
   canActivate: [authGuard],
   loadComponent: () => import('./pages/dice/dice').then((m) => m.Dice),
 },
+{
+  path: 'blackjack',
+  canActivate: [authGuard],
+  loadComponent: () => import('./pages/blackjack/blackjack').then((m) => m.Blackjack),
+},
+{
+  path: 'poker',
+  canActivate: [authGuard],
+  loadComponent: () => import('./pages/poker/poker').then((m) => m.Poker),
+},
   { path: '', pathMatch: 'full', redirectTo: 'lobby' },
   { path: '**', redirectTo: 'lobby' },
 ];

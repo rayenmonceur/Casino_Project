@@ -1,0 +1,16 @@
+.back { color: var(--muted); font-size: 14px; }
+.title { font-family: 'Cinzel', serif; color: var(--gold); margin: 8px 0 20px; }
+.table { max-width: 560px; margin: 0 auto; text-align: center; .field { text-align: left; } }
+.who { color: var(--muted); margin: 14px 0 0; b { color: var(--gold); } }
+.actions { display: flex; gap: 10px; margin: 20px 0 8px; .btn { flex: 1; } }
+.outcome { margin: 16px 0; }
+.winmsg { color: var(--turquoise); font-weight: 700; font-size: 20px; margin: 0; }
+.losemsg { color: #ff8fa0; margin: 0; }
+.wait { color: var(--muted); margin: 0; }
+.row { display: flex; gap: 8px; margin-bottom: 16px; justify-content: center; }
+.pill {
+  background: none; border: 1px solid var(--line); color: var(--text);
+  padding: 5px 14px; border-radius: 999px; cursor: pointer;
+  &:hover { border-color: var(--gold); }
+}
+.hint { color: var(--muted); font-size: 12px; margin: 12px 0 0; }

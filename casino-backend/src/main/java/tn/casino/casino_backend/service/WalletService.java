@@ -61,4 +61,34 @@ public class WalletService {
         walletRepository.save(wallet);
         return wallet.getBalance();
     }
+
+    // N5asmou flous (mise) fi transaction wa7da
+    @Transactional
+    public BigDecimal debit(String username, String game, BigDecimal amount) {
+        Wallet wallet = walletRepository.findByUsernameForUpdate(username)
+                .orElseThrow(() -> new IllegalArgumentException("Wallet introuvable"));
+        if (wallet.getBalance().compareTo(amount) < 0)
+            throw new IllegalArgumentException("Solde insuffisant");
+
+        wallet.setBalance(wallet.getBalance().subtract(amount));
+        transactionRepository.save(GameTransaction.builder()
+                .sender(username).receiver("CASINO")
+                .amount(amount).type(TransactionType.BET).game(game).build());
+        walletRepository.save(wallet);
+        return wallet.getBalance();
+    }
+
+    // Nzidou el gain
+    @Transactional
+    public BigDecimal credit(String username, String game, BigDecimal amount) {
+        Wallet wallet = walletRepository.findByUsernameForUpdate(username)
+                .orElseThrow(() -> new IllegalArgumentException("Wallet introuvable"));
+
+        wallet.setBalance(wallet.getBalance().add(amount));
+        transactionRepository.save(GameTransaction.builder()
+                .sender("CASINO").receiver(username)
+                .amount(amount).type(TransactionType.WIN).game(game).build());
+        walletRepository.save(wallet);
+        return wallet.getBalance();
+    }
 }
