@@ -1,0 +1,23 @@
+<main class="page">
+  <h2 class="hello">Marhba, <span>{{ auth.user()?.username }}</span></h2>
+  <p class="sub">Solde : {{ game.balance() | number: '1.0-0' }} jetons virtuels</p>
+    <p class="sub"><a routerLink="/fair">Jeu équitable : vérifier les résultats</a></p>
+  <div class="grid">
+    <a class="card game" routerLink="/roulette">
+      <div class="emoji">🎡</div>
+      <h3>Roulette</h3>
+      <p>Roulette européenne (0 à 36). Gain max x36.</p>
+    </a>
+
+    <a class="card game" routerLink="/slots">
+      <div class="emoji">🎰</div>
+      <h3>Machine à sous</h3>
+      <p>3 rouleaux, 5 symboles. Jackpot jusqu'à x45.</p>
+    </a>
+    <a class="card game" routerLink="/dice">
+  <div class="emoji">🎲</div>
+  <h3>Dice</h3>
+  <p>Choisis ta chance : plus elle est petite, plus le gain est gros (jusqu'à x48).</p>
+</a>
+  </div>
+</main>

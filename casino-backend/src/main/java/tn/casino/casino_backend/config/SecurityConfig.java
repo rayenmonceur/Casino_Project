@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import tn.casino.casino_backend.security.JwtAuthFilter;
 import tn.casino.casino_backend.security.RateLimitFilter;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
@@ -25,32 +26,34 @@ public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
     // (1) El filtre jdid mte3 rate limiting
     private final RateLimitFilter rateLimitFilter;
+    @Value("${app.cors.origins}")
+    private List<String> corsOrigins;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // JWT: ma n7ebouch CSRF w sessions
-            .csrf(AbstractHttpConfigurer::disable)
-            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // JWT: ma n7ebouch CSRF w sessions
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-            // Nsam7ou lel Angular (localhost:4200) yconnecti
-            .cors(c -> c.configurationSource(req -> {
-                var cfg = new CorsConfiguration();
-                cfg.setAllowedOrigins(List.of("http://localhost:4200"));
-                cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                cfg.setAllowedHeaders(List.of("*"));
-                return cfg;
-            }))
+                // Nsam7ou lel Angular (localhost:4200) yconnecti
+                .cors(c -> c.configurationSource(req -> {
+                    var cfg = new CorsConfiguration();
+                    cfg.setAllowedOrigins(corsOrigins);
+                    cfg.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    cfg.setAllowedHeaders(List.of("*"));
+                    return cfg;
+                }))
 
-            // Chkoun ynejem yodkhol win
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()      // login/register ll koul
-                .requestMatchers("/api/admin/**").hasRole("ADMIN") // admin barka
-                .anyRequest().authenticated()                      // el be9i lazem login
-            )
-            // (2) Rate limit yetexecuta 9bal el JWT
-            .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                // Chkoun ynejem yodkhol win
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**").permitAll() // login/register ll koul
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN") // admin barka
+                        .anyRequest().authenticated() // el be9i lazem login
+                )
+                // (2) Rate limit yetexecuta 9bal el JWT
+                .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

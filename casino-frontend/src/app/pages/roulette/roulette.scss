@@ -1,0 +1,55 @@
+.back { color: var(--muted); font-size: 14px; }
+.title { font-family: 'Cinzel', serif; color: var(--gold); margin: 8px 0 20px; }
+.layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+h3 { margin-top: 0; font-family: 'Cinzel', serif; }
+
+.wheel-box { text-align: center; }
+.pointer { color: var(--gold); font-size: 26px; line-height: 1; }
+
+.wheel {
+  width: 280px;
+  height: 280px;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 6px solid var(--gold-2);
+  position: relative;
+  transition: transform 4s cubic-bezier(0.15, 0.6, 0.15, 1);
+  box-shadow: 0 0 40px rgba(232, 194, 107, 0.25);
+
+  // Moyeu doré au centre
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 32%;
+    border-radius: 50%;
+    background: radial-gradient(circle, #f6d98b, var(--gold-2));
+  }
+}
+
+.num-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+}
+
+// Colonne un peu plus large pour que la roue rentre
+.layout { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+
+.outcome { min-height: 90px; margin-top: 20px; }
+.num { font-family: 'Cinzel', serif; font-size: 32px; margin: 0; }
+.wait { color: var(--muted); }
+.win { color: var(--turquoise); font-weight: 600; }
+.lose { color: #ff8fa0; }
+
+.row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.pill {
+  background: none; border: 1px solid var(--line); color: var(--text);
+  padding: 8px 14px; border-radius: 999px; cursor: pointer;
+  &.active { background: var(--gold); color: #1a1305; border-color: var(--gold); }
+  &.small { padding: 5px 12px; font-size: 13px; }
+}
+.spin { margin-top: 8px; }
+.hint { color: var(--muted); font-size: 12px; text-align: center; }

@@ -1,0 +1,62 @@
+<main class="page">
+  <a routerLink="/lobby" class="back">← Lobby</a>
+  <h2 class="title">Jeu équitable (Provably Fair)</h2>
+  <p class="intro">
+    Chaque résultat = HMAC-SHA256(serverSeed, clientSeed:nonce:index). Le casino s'engage sur le hash du
+    serverSeed avant que tu joues, et le révèle après rotation pour que tu puisses tout vérifier.
+  </p>
+
+  @if (error()) { <p class="error">{{ error() }}</p> }
+
+  <section class="card">
+    <h3>Seed actif</h3>
+    @if (info(); as i) {
+      <p class="label">Hash du serverSeed (SHA-256)</p>
+      <code>{{ i.serverSeedHash }}</code>
+      <p class="label">Prochain nonce : <b>{{ i.nonce }}</b></p>
+    }
+    <label class="field">
+      <span>Ton client seed (modifiable)</span>
+      <input [(ngModel)]="newClientSeed" maxlength="64" />
+    </label>
+    <button class="btn small" (click)="saveClientSeed()">Enregistrer</button>
+  </section>
+
+  <section class="card">
+    <h3>Révéler le secret</h3>
+    <p class="label">La rotation révèle le serverSeed actuel et en génère un nouveau.</p>
+    <button class="btn small" (click)="rotate()">Faire une rotation</button>
+
+    @if (reveal(); as r) {
+      <p class="label">serverSeed révélé</p>
+      <code>{{ r.serverSeed }}</code>
+      <p class="label">Hash annoncé avant : </p>
+      <code>{{ r.serverSeedHash }}</code>
+    }
+  </section>
+
+  <section class="card">
+    <h3>Vérifier un résultat</h3>
+    <label class="field"><span>serverSeed</span><input [(ngModel)]="vServer" /></label>
+    <label class="field"><span>Hash annoncé</span><input [(ngModel)]="vHash" /></label>
+    <label class="field"><span>clientSeed (celui du résultat)</span><input [(ngModel)]="vClient" /></label>
+    <label class="field"><span>nonce (celui du résultat)</span><input type="number" [(ngModel)]="vNonce" /></label>
+    <label class="field">
+      <span>Jeu</span>
+      <select [(ngModel)]="vGame">
+        <option value="ROULETTE">Roulette</option>
+        <option value="SLOTS">Machine à sous</option>
+        <option value="DICE">Dice</option>
+      </select>
+    </label>
+    <button class="btn small" (click)="verify()">Vérifier</button>
+
+    @if (verified(); as v) {
+      <p [class]="v.hashMatches ? 'ok' : 'ko'">
+        {{ v.hashMatches ? 'Hash conforme : le secret est bien celui annoncé.' : 'Hash différent !' }}
+      </p>
+      <p class="label">Valeurs recalculées : <b>{{ v.values.join(' | ') }}</b></p>
+      <p class="label">Roulette: numéro 0 à 36. Slots: 0=🍒 1=🍋 2=🔔 3=⭐ 4=7️⃣. Dice: valeur ÷ 100 (ex: 4732 = 47.32).</p>
+    }
+  </section>
+</main>

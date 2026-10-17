@@ -1,0 +1,11 @@
+.hello { font-family: 'Cinzel', serif; font-size: 30px; margin: 0; span { color: var(--gold); } }
+.sub { color: var(--muted); margin: 6px 0 28px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.game {
+  color: var(--text);
+  transition: transform 0.2s, border-color 0.2s;
+  &:hover { transform: translateY(-4px); border-color: var(--gold); text-decoration: none; }
+  .emoji { font-size: 48px; }
+  h3 { font-family: 'Cinzel', serif; color: var(--gold); margin: 10px 0 6px; }
+  p { color: var(--muted); margin: 0; }
+}

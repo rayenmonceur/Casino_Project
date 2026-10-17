@@ -1,0 +1,31 @@
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(8, 12, 28, 0.8);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  .logo-link { display: flex; align-items: center; gap: 10px; &:hover { text-decoration: none; } }
+  .brand { font-size: 20px; }
+  nav { display: flex; align-items: center; gap: 18px; }
+  .balance {
+    color: var(--gold);
+    font-weight: 600;
+    border: 1px solid var(--gold-2);
+    padding: 6px 14px;
+    border-radius: 999px;
+    small { color: var(--muted); font-weight: 400; }
+  }
+  .logout {
+    background: none; border: 1px solid var(--line); color: var(--muted);
+    padding: 6px 12px; border-radius: 8px; cursor: pointer;
+    &:hover { color: var(--text); border-color: var(--muted); }
+  }
+}
+
+.foot { text-align: center; color: var(--muted); font-size: 12px; padding: 24px; }

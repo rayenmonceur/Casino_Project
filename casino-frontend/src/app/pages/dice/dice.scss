@@ -1,0 +1,41 @@
+.back { color: var(--muted); font-size: 14px; }
+.title { font-family: 'Cinzel', serif; color: var(--gold); margin: 8px 0 20px; }
+.machine { max-width: 520px; margin: 0 auto; text-align: center; .field { text-align: left; } }
+
+.roll {
+  font-family: 'Cinzel', serif;
+  font-size: 64px;
+  margin-bottom: 14px;
+  &.win { color: var(--turquoise); }
+  &.lose { color: #ff8fa0; }
+}
+
+.bar { position: relative; height: 16px; border-radius: 999px; overflow: visible; }
+.marker {
+  position: absolute; top: -6px; width: 4px; height: 28px; margin-left: -2px;
+  background: var(--gold); border-radius: 2px; box-shadow: 0 0 10px var(--gold);
+  transition: left 0.3s;
+}
+.scale { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; margin: 6px 0 18px; }
+
+.switch { display: flex; gap: 8px; justify-content: center; margin-bottom: 16px; }
+.pill {
+  background: none; border: 1px solid var(--line); color: var(--text);
+  padding: 8px 16px; border-radius: 999px; cursor: pointer;
+  &:hover { border-color: var(--gold); }
+  &.active { background: var(--gold); color: #1a1305; border-color: var(--gold); }
+}
+
+input[type='range'] { width: 100%; padding: 0; accent-color: var(--gold); }
+
+.info {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;
+  div { background: #0b1130; border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+  small { display: block; color: var(--muted); font-size: 12px; }
+  b { color: var(--gold); font-size: 18px; }
+}
+
+.row { display: flex; gap: 8px; margin-bottom: 16px; justify-content: center; }
+.outcome { min-height: 56px; margin-bottom: 8px; }
+.winmsg { color: var(--turquoise); font-weight: 700; font-size: 20px; margin: 0; }
+.losemsg { color: #ff8fa0; margin: 0; }

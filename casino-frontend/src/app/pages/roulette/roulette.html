@@ -1,0 +1,64 @@
+<main class="page">
+  <a routerLink="/lobby" class="back">← Lobby</a>
+  <h2 class="title">Roulette</h2>
+
+  <div class="layout">
+    <section class="card wheel-box">
+      <div class="pointer">▼</div>
+      <div class="wheel" [style.transform]="'rotate(' + rotation() + 'deg)'" [style.background]="gradient">
+  @for (s of slots; track s.n) {
+    <span class="num-label" [style.transform]="s.transform">{{ s.n }}</span>
+  }
+</div>
+
+      <div class="outcome">
+        @if (spinning()) {
+          <p class="wait">Les jeux sont faits…</p>
+        } @else if (result(); as r) {
+          <p class="num">{{ r.outcome }}</p>
+          @if (r.win) {
+            <p class="win">Gagné ! +{{ r.payout | number: '1.0-0' }} jetons</p>
+          } @else {
+            <p class="lose">Perdu, -{{ r.bet | number: '1.0-0' }} jetons</p>
+          }
+          <p class="proof">Preuve : nonce {{ r.nonce }}, hash {{ r.serverSeedHash.slice(0, 12) }}…</p>
+        } @else {
+          <p class="wait">Place ta mise</p>
+        }
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Type de pari</h3>
+      <div class="row">
+        @for (t of types; track t.id) {
+          <button class="pill" [class.active]="betType() === t.id" (click)="betType.set(t.id)">
+            {{ t.label }}
+          </button>
+        }
+      </div>
+
+      @if (betType() === 'NUMBER') {
+        <label class="field">
+          <span>Numéro (0 à 36), gain x36</span>
+          <input type="number" min="0" max="36" [(ngModel)]="number" />
+        </label>
+      }
+
+      <label class="field">
+        <span>Mise (1 à 500 jetons)</span>
+        <input type="number" min="1" max="500" [(ngModel)]="amount" />
+      </label>
+      <div class="row">
+        @for (c of chips; track c) {
+          <button class="pill small" (click)="amount = c">{{ c }}</button>
+        }
+      </div>
+
+      @if (error()) { <p class="error">{{ error() }}</p> }
+
+      <button class="btn spin" [disabled]="spinning()" (click)="spin()">Lancer la roue</button>
+      <p class="hint">Rouge / Noir / Pair / Impair : x2. Numéro : x36.</p>
+    </section>
+  </div>
+</main>

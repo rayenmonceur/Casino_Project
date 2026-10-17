@@ -1,0 +1,45 @@
+<main class="page">
+  <a routerLink="/lobby" class="back">← Lobby</a>
+  <h2 class="title">Machine à sous</h2>
+
+  <section class="card machine">
+    <div class="reels">
+      @for (s of reels(); track $index) {
+        <div class="reel" [class.spin]="spinning()">{{ s }}</div>
+      }
+    </div>
+
+    <div class="outcome">
+      @if (result(); as r) {
+        @if (r.win) {
+          <p class="win">JACKPOT ! +{{ r.payout | number: '1.0-0' }} jetons</p>
+        } @else {
+          <p class="lose">Perdu, -{{ r.bet | number: '1.0-0' }} jetons</p>
+        }
+        <p class="proof">Preuve : nonce {{ r.nonce }}, hash {{ r.serverSeedHash.slice(0, 12) }}…</p>
+      } @else {
+        <p class="wait">3 symboles identiques = gain</p>
+      }
+    </div>
+
+    <label class="field">
+      <span>Mise (1 à 500 jetons)</span>
+      <input type="number" min="1" max="500" [(ngModel)]="amount" />
+    </label>
+    <div class="row">
+      @for (c of chips; track c) {
+        <button class="pill" (click)="amount = c">{{ c }}</button>
+      }
+    </div>
+
+    @if (error()) { <p class="error">{{ error() }}</p> }
+
+    <button class="btn" [disabled]="spinning()" (click)="spin()">Tourner</button>
+
+    <table class="pay">
+      <tr><td>🍒🍒🍒</td><td>x10</td><td>🍋🍋🍋</td><td>x15</td></tr>
+      <tr><td>🔔🔔🔔</td><td>x20</td><td>⭐⭐⭐</td><td>x30</td></tr>
+      <tr><td>7️⃣7️⃣7️⃣</td><td>x45</td><td></td><td></td></tr>
+    </table>
+  </section>
+</main>

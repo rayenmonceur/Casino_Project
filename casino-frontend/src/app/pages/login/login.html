@@ -1,0 +1,24 @@
+<main class="auth-page">
+  <section class="card auth-card">
+    <app-logo [size]="84" />
+    <h1 class="brand">QARTAJ</h1>
+    <p class="tagline">Royal Casino</p>
+
+    <form (ngSubmit)="submit()">
+      <label class="field">
+        <span>Nom d'utilisateur</span>
+        <input name="username" [(ngModel)]="username" required autocomplete="username" />
+      </label>
+      <label class="field">
+        <span>Mot de passe</span>
+        <input name="password" type="password" [(ngModel)]="password" required autocomplete="current-password" />
+      </label>
+
+      @if (error()) { <p class="error">{{ error() }}</p> }
+
+      <button class="btn" [disabled]="loading()">Entrer</button>
+    </form>
+
+    <p class="alt">Nouveau ? <a routerLink="/register">Créer un compte</a></p>
+  </section>
+</main>

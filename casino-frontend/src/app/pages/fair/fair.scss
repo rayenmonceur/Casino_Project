@@ -1,0 +1,16 @@
+.back { color: var(--muted); font-size: 14px; }
+.title { font-family: 'Cinzel', serif; color: var(--gold); margin: 8px 0; }
+.intro { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+.card { margin-bottom: 20px; h3 { margin-top: 0; font-family: 'Cinzel', serif; } }
+.label { color: var(--muted); font-size: 13px; margin: 12px 0 4px; }
+code {
+  display: block; word-break: break-all; padding: 10px;
+  background: #0b1130; border: 1px solid var(--line); border-radius: 8px; font-size: 12px;
+}
+.btn.small { width: auto; padding: 9px 18px; }
+select {
+  width: 100%; padding: 12px; background: #0b1130; color: var(--text);
+  border: 1px solid var(--line); border-radius: 10px;
+}
+.ok { color: var(--turquoise); font-weight: 600; }
+.ko { color: #ff8fa0; font-weight: 600; }

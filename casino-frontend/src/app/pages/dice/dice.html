@@ -1,0 +1,62 @@
+<main class="page">
+  <a routerLink="/lobby" class="back">← Lobby</a>
+  <h2 class="title">Dice</h2>
+
+  <section class="card machine">
+    <div class="roll" [class.win]="result()?.win" [class.lose]="result() && !result()!.win">
+      {{ display() }}
+    </div>
+
+    <div class="bar" [style.background]="barBg">
+      @if (rollPos() !== null) {
+        <div class="marker" [style.left.%]="rollPos()"></div>
+      }
+    </div>
+    <div class="scale"><span>0</span><span>50</span><span>100</span></div>
+
+    <div class="switch">
+      <button class="pill" [class.active]="direction === 'UNDER'" (click)="direction = 'UNDER'">
+        Moins que {{ target }}
+      </button>
+      <button class="pill" [class.active]="direction === 'OVER'" (click)="direction = 'OVER'">
+        Plus que {{ target }}
+      </button>
+    </div>
+
+    <label class="field">
+      <span>Target : {{ target }}</span>
+      <input type="range" min="2" max="98" step="1" [(ngModel)]="target" />
+    </label>
+
+    <div class="info">
+      <div><small>Chance</small><b>{{ chance }}%</b></div>
+      <div><small>Multiplicateur</small><b>x{{ multiplier | number: '1.2-2' }}</b></div>
+      <div><small>Gain possible</small><b>{{ potentialWin | number: '1.0-2' }}</b></div>
+    </div>
+
+    <label class="field">
+      <span>Mise (1 à 500 jetons)</span>
+      <input type="number" min="1" max="500" [(ngModel)]="amount" />
+    </label>
+    <div class="row">
+      @for (c of chips; track c) {
+        <button class="pill" (click)="amount = c">{{ c }}</button>
+      }
+    </div>
+
+    <div class="outcome">
+      @if (result(); as r) {
+        @if (r.win) {
+          <p class="winmsg">Gagné ! +{{ r.payout | number: '1.0-2' }} jetons</p>
+        } @else {
+          <p class="losemsg">Perdu, -{{ r.bet | number: '1.0-0' }} jetons</p>
+        }
+        <p class="proof">Preuve : nonce {{ r.nonce }}, hash {{ r.serverSeedHash.slice(0, 12) }}…</p>
+      }
+    </div>
+
+    @if (error()) { <p class="error">{{ error() }}</p> }
+
+    <button class="btn" [disabled]="rolling()" (click)="roll()">Lancer</button>
+  </section>
+</main>

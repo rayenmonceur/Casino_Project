@@ -1,0 +1,28 @@
+.back { color: var(--muted); font-size: 14px; }
+.title { font-family: 'Cinzel', serif; color: var(--gold); margin: 8px 0 20px; }
+.machine { max-width: 520px; margin: 0 auto; text-align: center; .field { text-align: left; } }
+
+.reels { display: flex; justify-content: center; gap: 12px; margin-bottom: 16px; }
+.reel {
+  width: 100px; height: 110px;
+  display: grid; place-items: center;
+  font-size: 58px;
+  background: #0b1130;
+  border: 2px solid var(--gold-2);
+  border-radius: 14px;
+  &.spin { filter: blur(1.5px); }
+}
+
+.outcome { min-height: 40px; margin-bottom: 12px; }
+.win { color: var(--turquoise); font-weight: 700; font-size: 20px; margin: 0; }
+.lose { color: #ff8fa0; margin: 0; }
+.wait { color: var(--muted); margin: 0; }
+
+.row { display: flex; gap: 8px; margin-bottom: 16px; justify-content: center; }
+.pill {
+  background: none; border: 1px solid var(--line); color: var(--text);
+  padding: 5px 14px; border-radius: 999px; cursor: pointer;
+  &:hover { border-color: var(--gold); }
+}
+
+.pay { width: 100%; margin-top: 20px; color: var(--muted); font-size: 14px; td { padding: 4px; } }

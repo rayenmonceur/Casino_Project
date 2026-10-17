@@ -1,0 +1,40 @@
+.wide { max-width: 1100px; }
+.head { display: flex; justify-content: space-between; align-items: center; }
+.title { font-family: 'Cinzel', serif; color: var(--gold); margin: 0; }
+.refresh {
+  background: none; border: 1px solid var(--line); color: var(--text);
+  padding: 8px 14px; border-radius: 8px; cursor: pointer;
+  &:hover { border-color: var(--gold); }
+}
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin: 20px 0; }
+.stat {
+  padding: 18px;
+  small { color: var(--muted); display: block; }
+  b { font-size: 26px; color: var(--gold); }
+}
+
+.tabs {
+  display: flex; gap: 8px; margin-bottom: 12px;
+  button {
+    background: none; border: 1px solid var(--line); color: var(--muted);
+    padding: 8px 16px; border-radius: 999px; cursor: pointer;
+    &.active { background: var(--gold); color: #1a1305; border-color: var(--gold); }
+  }
+}
+
+.table-box { padding: 0; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 500; }
+.amount { font-weight: 600; }
+.empty { text-align: center; color: var(--muted); padding: 28px; }
+
+.tag {
+  padding: 3px 10px; border-radius: 999px; font-size: 12px;
+  background: rgba(152, 160, 196, 0.15);
+  &.WIN { background: rgba(46, 196, 182, 0.2); color: var(--turquoise); }
+  &.BET { background: rgba(232, 194, 107, 0.15); color: var(--gold); }
+  &.LOGIN_FAILED { background: rgba(232, 194, 107, 0.2); color: var(--gold); }
+  &.LOGIN_BLOCKED, &.RATE_LIMIT { background: rgba(192, 49, 74, 0.25); color: #ff8fa0; }
+}

@@ -1,0 +1,28 @@
+<main class="auth-page">
+  <section class="card auth-card">
+    <app-logo [size]="72" />
+    <h1 class="brand">QARTAJ</h1>
+    <p class="bonus">1000 jetons virtuels offerts à l'inscription</p>
+
+    <form (ngSubmit)="submit()">
+      <label class="field">
+        <span>Nom d'utilisateur (3 à 20 caractères)</span>
+        <input name="username" [(ngModel)]="username" required minlength="3" maxlength="20" />
+      </label>
+      <label class="field">
+        <span>Email</span>
+        <input name="email" type="email" [(ngModel)]="email" required />
+      </label>
+      <label class="field">
+        <span>Mot de passe (8 caractères minimum)</span>
+        <input name="password" type="password" [(ngModel)]="password" required minlength="8" autocomplete="new-password" />
+      </label>
+
+      @if (error()) { <p class="error">{{ error() }}</p> }
+
+      <button class="btn" [disabled]="loading()">Créer mon compte</button>
+    </form>
+
+    <p class="alt">Déjà inscrit ? <a routerLink="/login">Se connecter</a></p>
+  </section>
+</main>

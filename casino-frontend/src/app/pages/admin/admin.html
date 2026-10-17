@@ -1,0 +1,67 @@
+<main class="page wide">
+  <div class="head">
+    <h2 class="title">Tableau de bord Admin</h2>
+    <button class="refresh" (click)="load()">Actualiser</button>
+  </div>
+
+  @if (error()) { <p class="error">{{ error() }}</p> }
+
+  @if (stats(); as s) {
+    <div class="stats">
+      <div class="card stat"><small>Joueurs</small><b>{{ s.users }}</b></div>
+      <div class="card stat"><small>Total misé</small><b>{{ s.totalBets | number: '1.0-0' }}</b></div>
+      <div class="card stat"><small>Total gagné</small><b>{{ s.totalWins | number: '1.0-0' }}</b></div>
+      <div class="card stat"><small>Profit casino</small><b>{{ s.casinoProfit | number: '1.0-0' }}</b></div>
+    </div>
+  }
+
+  <div class="tabs">
+    <button [class.active]="tab() === 'tx'" (click)="tab.set('tx')">Transactions</button>
+    <button [class.active]="tab() === 'sec'" (click)="tab.set('sec')">
+      Alertes sécurité ({{ events().length }})
+    </button>
+  </div>
+
+  <div class="card table-box">
+    @if (tab() === 'tx') {
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Émetteur</th><th>Récepteur</th><th>Montant</th><th>Type</th><th>Jeu</th></tr>
+        </thead>
+        <tbody>
+          @for (t of txs(); track t.id) {
+            <tr>
+              <td>{{ t.createdAt | date: 'dd/MM HH:mm:ss' }}</td>
+              <td>{{ t.sender }}</td>
+              <td>{{ t.receiver }}</td>
+              <td class="amount">{{ t.amount | number: '1.0-2' }}</td>
+              <td><span class="tag {{ t.type }}">{{ t.type }}</span></td>
+              <td>{{ t.game }}</td>
+            </tr>
+          } @empty {
+            <tr><td colspan="6" class="empty">Aucune transaction</td></tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Type</th><th>IP</th><th>Utilisateur</th><th>Détails</th></tr>
+        </thead>
+        <tbody>
+          @for (e of events(); track e.id) {
+            <tr>
+              <td>{{ e.createdAt | date: 'dd/MM HH:mm:ss' }}</td>
+              <td><span class="tag {{ e.type }}">{{ e.type }}</span></td>
+              <td>{{ e.ip }}</td>
+              <td>{{ e.username ?? '-' }}</td>
+              <td>{{ e.details }}</td>
+            </tr>
+          } @empty {
+            <tr><td colspan="5" class="empty">Aucune alerte, tout est calme</td></tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</main>
